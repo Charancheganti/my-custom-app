@@ -1,15 +1,8 @@
-# 1. Use an official lightweight Node.js base image
-FROM node:18-alpine
+# Use Nginx lightweight base image
+FROM nginx:alpine
 
-# 2. Set the working directory inside the container
-WORKDIR /usr/src/app
+# Copy our clean local HTML menu file directly into Nginx web servers directory
+COPY index.html /usr/share/nginx/html/index.html
 
-# 3. Copy your local files into the container
-COPY index.html .
-COPY server.js .
-
-# 4. Expose port 80 to the outside world
+# Expose standard web traffic port
 EXPOSE 80
-
-# 5. Define the command to run your app
-CMD [ "node", "server.js" ]
