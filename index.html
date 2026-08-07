@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevOps Gourmet Bistro</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #e67e22;
+            --bg: #f4f7f6;
+            --card-bg: #ffffff;
+        }
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg);
+            color: #333;
+        }
+        header {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            color: white;
+            text-align: center;
+            padding: 3rem 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.8rem;
+            color: var(--accent);
+        }
+        .badge {
+            background-color: #22c55e;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 1rem;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .filter-btn {
+            background: white;
+            border: 2px solid #e2e8f0;
+            padding: 0.5rem 1.25rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 1.5rem;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            justify-content: space-between;
+        }
+        .card-price {
+            color: var(--accent);
+        }
+        .card-desc {
+            color: #64748b;
+            font-size: 0.95rem;
+            margin: 1rem 0;
+            line-height: 1.5;
+        }
+        .btn-order {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .btn-order:hover {
+            opacity: 0.9;
+        }
+        .cart-summary {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            font-weight: 600;
+        }
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: #0f172a;
+            color: #94a3b8;
+            margin-top: 4rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>DevOps Gourmet Bistro</h1>
+        <p>Automated Continuous Delivery Pipeline • Built with Jenkins & Docker</p>
+        <span class="badge">● Pipeline v2.0 Live</span>
+    </header>
+
+    <div class="container">
+        <div class="controls">
+            <div>
+                <button class="filter-btn active" onclick="filterMenu('all')">All Items</button>
+                <button class="filter-btn" onclick="filterMenu('mains')">Mains</button>
+                <button class="filter-btn" onclick="filterMenu('sides')">Sides & Starters</button>
+            </div>
+        </div>
+
+        <div class="menu-grid">
+            <div class="card" data-category="mains">
+                <div>
+                    <div class="card-title">
+                        <span>The Jenkins Master Burger</span>
+                        <span class="card-price">$16.99</span>
+                    </div>
+                    <div class="card-desc">Angus beef patty, smoked cheddar, crispy onions, and signature automation aioli on a toasted brioche bun.</div>
+                </div>
+                <button class="btn-order" onclick="addToTotal(16.99)">Add to Order</button>
+            </div>
+
+            <div class="card" data-category="mains">
+                <div>
+                    <div class="card-title">
+                        <span>Docker Filet Mignon</span>
+                        <span class="card-price">$28.50</span>
+                    </div>
+                    <div class="card-desc">8oz grass-fed beef tenderloin cooked to perfection, wrapped in isolated herb seasoning with garlic truffle butter.</div>
+                </div>
+                <button class="btn-order" onclick="addToTotal(28.50)">Add to Order</button>
+            </div>
+
+            <div class="card" data-category="sides">
+                <div>
+                    <div class="card-title">
+                        <span>Kubernetes Cluster Wings</span>
+                        <span class="card-price">$13.25</span>
+                    </div>
+                    <div class="card-desc">Crispy jumbo chicken wings tossed in your choice of Buffalo, BBQ, or Garlic Parmesan sauce. High availability flavor.</div>
+                </div>
+                <button class="btn-order" onclick="addToTotal(13.25)">Add to Order</button>
+            </div>
+
+            <div class="card" data-category="sides">
+                <div>
+                    <div class="card-title">
+                        <span>Pipeline Fries</span>
+                        <span class="card-price">$6.50</span>
+                    </div>
+                    <div class="card-desc">Hand-cut golden potatoes lightly seasoned with sea salt and rosemary. Delivered crisp and hot directly from the frier stage.</div>
+                </div>
+                <button class="btn-order" onclick="addToTotal(6.50)">Add to Order</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="cart-summary" id="cart-bar">
+        Cart Total: $<span id="total-val">0.00</span>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 DevOps Bistro. Deployment Engine Operational.</p>
+    </footer>
+
+    <script>
+        let total = 0;
+        function addToTotal(price) {
+            total += price;
+            document.getElementById('total-val').innerText = total.toFixed(2);
+        }
+
+        function filterMenu(category) {
+            const cards = document.querySelectorAll('.card');
+            const buttons = document.querySelectorAll('.filter-btn');
+
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
